@@ -1,0 +1,14 @@
+refreshinterval: 60
+coreurl: https://ec5bc633.ngrok.io
+http:
+  address: ":8080" # The HTTP address to bind to
+  readtimeout: 5 # in seconds
+  writetimeout: 10 # in seconds
+log:
+  level: "DEBUG"
+  filename: "/var/log/discomotion/dev.log"
+  maxsizemb: 500
+  maxbackups: 7
+  maxagedays: 10
+  writestdout: true 
+  json: false
