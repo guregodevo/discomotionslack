@@ -7,7 +7,7 @@ BUILD_TIME=$(shell date -u '+%Y-%m-%d_%H:%M:%S_UTC')
 LDFLAGS=-ldflags "-X main.Version=${VERSION} -X main.Build=${GIT_COMMIT} -X main.BuildTime=${BUILD_TIME}"
 
 GIT_VERSION=$(shell git describe --tags --always --long --dirty --abbrev=7)
-GO_PKG=github.com/dailymotion-leo/discomotion
+GO_PKG=github.com/dailymotion-leo/discomotionslack
 
 GOOS=$(shell go env GOOS)
 GOARCH=$(shell go env GOARCH)
@@ -16,7 +16,7 @@ OUTPUT_DIR=.
 OUTPUT_NAME=${BINARY}
 DOCKER_IMAGE_VERSION=${GIT_VERSION}
 DOCKER_REGISTRY=374211583830.dkr.ecr.us-west-2.amazonaws.com
-DOCKER_REPOSITORY=dmx_currency_fetcher_api
+DOCKER_REPOSITORY=dmx_discomotionslack_api
 DOCKER_REPOSITORY_VERSION=latest
 UID=$(shell id -u)
 GID=$(shell id -g)

@@ -11,8 +11,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/dailymotion-leo/discomotion/misc"
-	"github.com/dailymotion-leo/discomotion/server"
+	"github.com/dailymotion-leo/discomotionslack/misc"
+	"github.com/dailymotion-leo/discomotionslack/server"
 	"github.com/nlopes/slack"
 	log "github.com/sirupsen/logrus"
 	lumberjack "gopkg.in/natefinch/lumberjack.v2"

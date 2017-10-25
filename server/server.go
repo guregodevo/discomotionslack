@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/dailymotion-leo/discomotion/misc"
+	"github.com/dailymotion-leo/discomotionslack/misc"
 	"github.com/gorilla/mux"
 	"github.com/nlopes/slack"
 	log "github.com/sirupsen/logrus"
