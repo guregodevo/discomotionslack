@@ -39,17 +39,7 @@ func (s *Server) Index(w http.ResponseWriter, r *http.Request) {
 	WriteJson(w, &status, http.StatusOK)
 }
 
-func sendCoreEvent(idx string, now bool, baseUrl string, channelId string, username string, users map[string]float32) {
-
-	if now {
-		i, ok := users[username]
-
-		if !ok {
-			users[username] = item_price
-		} else {
-			users[username] = i + item_price
-		}
-	}
+func sendCoreEvent(idx string, now bool, baseUrl string, channelId string) {
 
 	v := models.PlayVideo{VideoId: idx, Now: now}
 
@@ -111,19 +101,32 @@ func (s *Server) Interactive(w http.ResponseWriter, r *http.Request) {
 
 	channelId := action.Channel.ID
 
-	log.Debug("channelID", channelId)
-	log.Debug("videoID", idx)
-	log.Debug("action", actionname)
-	log.Debug("username", username)
+	log.Debug("channelID ", channelId)
+	log.Debug("videoID ", idx)
+	log.Debug("action ", actionname)
+	log.Debug("username ", username)
 
 	//usernames := strings.Split(username, ".")
 	//username = fmt.Sprintf("%s%s", usernames[0][:1], usernames[1])
 
-	if actionname == "queue" {
+	if actionname == "play" {
+		log.Debug("bill before", s.Users[username])
+
+		i, ok := s.Users[username]
+
+		if !ok {
+			s.Users[username] = item_price
+		} else {
+			s.Users[username] = i + item_price
+		}
+
+		log.Debug("bill after", s.Users[username])
+
+		go sendCoreEvent(idx, true, s.BaseURL, channelId)
+		actionname = "play"
+	} else {
 		actionname = "queu"
-		go sendCoreEvent(idx, false, s.BaseURL, channelId, username, s.Users)
-	} else if actionname == "play" {
-		go sendCoreEvent(idx, true, s.BaseURL, channelId, username, s.Users)
+		go sendCoreEvent(idx, false, s.BaseURL, channelId)
 	}
 
 	writeText(w, fmt.Sprintf("%s %sed \"%s\"", username, actionname, title), http.StatusOK)
