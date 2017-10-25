@@ -223,12 +223,12 @@ func (s *Server) DiscoCommand(w http.ResponseWriter, r *http.Request) {
 				Value: "",
 			}},
 			Actions: []slack.AttachmentAction{slack.AttachmentAction{
-				Text:  "queue",
+				Text:  "Queue",
 				Type:  "button",
 				Name:  strings.Join([]string{"queue", username, item.Title}, "::::"),
 				Value: item.Id,
 			}, slack.AttachmentAction{
-				Text:  "play now",
+				Text:  "Play now 0.10€",
 				Type:  "button",
 				Name:  strings.Join([]string{"play", username, item.Title}, "::::"),
 				Value: item.Id,
