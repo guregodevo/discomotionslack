@@ -27,6 +27,7 @@ type Conf struct {
 	StatsdHost      string
 	Log             Log
 	CoreURL         string
+	PlayerURL       string
 	Http            Http
 	Token           string
 }

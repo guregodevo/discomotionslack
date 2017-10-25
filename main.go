@@ -62,7 +62,7 @@ func main() {
 		hostname = host
 	}
 
-	s := startHTTPServer(&conf.Http, termChan, api, mutex, conf.CoreURL)
+	s := startHTTPServer(&conf.Http, termChan, api, mutex, conf.CoreURL, conf.PlayerURL)
 
 	ticker := time.NewTicker(time.Minute)
 	for {
@@ -116,7 +116,7 @@ func setupLogging(conf *misc.Log) {
 	}
 }
 
-func startHTTPServer(conf *misc.Http, termChan chan os.Signal, api *slack.Client, mutex *sync.Mutex, url string) *server.Server {
+func startHTTPServer(conf *misc.Http, termChan chan os.Signal, api *slack.Client, mutex *sync.Mutex, url string, playerURL string) *server.Server {
 
 	s := &server.Server{
 		Info: &server.ServerInfo{
@@ -126,10 +126,11 @@ func startHTTPServer(conf *misc.Http, termChan chan os.Signal, api *slack.Client
 			BuildTime: BuildTime,
 			Hostname:  hostname,
 		},
-		Uptime:  time.Now(),
-		Api:     api,
-		Mutex:   mutex,
-		BaseURL: url,
+		Uptime:    time.Now(),
+		Api:       api,
+		Mutex:     mutex,
+		BaseURL:   url,
+		PlayerURL: playerURL,
 	}
 
 	go func() {

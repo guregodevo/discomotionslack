@@ -119,7 +119,21 @@ func (s *Server) Interactive(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-// Responds to slack command /play
+// Responds to slack command /disco-link
+func (s *Server) LinkCommand(w http.ResponseWriter, r *http.Request) {
+
+	err := r.ParseForm()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	channelId := r.Form.Get("channel_id")
+
+	writeText(w, fmt.Sprintf("%s/%s", s.PlayerURL, channelId), http.StatusOK)
+}
+
+// Responds to slack command /disco
 func (s *Server) DiscoCommand(w http.ResponseWriter, r *http.Request) {
 
 	err := r.ParseForm()
@@ -127,7 +141,7 @@ func (s *Server) DiscoCommand(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	log.Println("r.Form", r.Form)
+	log.Debug("r.Form", r.Form)
 
 	values := r.Form
 

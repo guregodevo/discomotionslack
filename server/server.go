@@ -21,12 +21,13 @@ type ServerInfo struct {
 }
 
 type Server struct {
-	Info    *ServerInfo
-	BaseURL string
-	Uptime  time.Time
-	Server  *http.Server
-	Api     *slack.Client
-	Mutex   *sync.Mutex
+	Info      *ServerInfo
+	BaseURL   string
+	PlayerURL string
+	Uptime    time.Time
+	Server    *http.Server
+	Api       *slack.Client
+	Mutex     *sync.Mutex
 }
 
 func (s *Server) Run(conf *misc.Http) error {
@@ -68,6 +69,7 @@ func (s *Server) NewRouter() *mux.Router {
 	router := mux.NewRouter().StrictSlash(true)
 	s.addRoute(router, "slackPlayInteractive", "POST", "/discomotion/v1/interactive", s.Interactive)
 	s.addRoute(router, "slackPlay", "POST", "/discomotion/v1/play", s.DiscoCommand)
+	s.addRoute(router, "slackPlay", "POST", "/discomotion/v1/link", s.LinkCommand)
 	s.addRoute(router, "Index", "GET", "/", s.Index)
 
 	return router
