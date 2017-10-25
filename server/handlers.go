@@ -216,6 +216,7 @@ func (s *Server) DiscoCommand(w http.ResponseWriter, r *http.Request) {
 
 	for _, item := range searchResult {
 		attachments = append(attachments, slack.Attachment{
+
 			Fallback:   "fallback",
 			CallbackID: "interactive_fdqsdfjqsldkfj",
 			Fields: []slack.AttachmentField{slack.AttachmentField{
@@ -229,6 +230,7 @@ func (s *Server) DiscoCommand(w http.ResponseWriter, r *http.Request) {
 				Value: item.Id,
 			}, slack.AttachmentAction{
 				Text:  "Play now 0.10€",
+				Style: "danger",
 				Type:  "button",
 				Name:  strings.Join([]string{"play", username, item.Title}, "::::"),
 				Value: item.Id,
@@ -247,7 +249,6 @@ func (s *Server) DiscoCommand(w http.ResponseWriter, r *http.Request) {
 	log.Debug(respMsg)
 
 	w.WriteHeader(http.StatusOK)
-	//writeJson(w, "", http.StatusOK)
 }
 
 /*func writeText(w http.ResponseWriter, text string, status int) {
