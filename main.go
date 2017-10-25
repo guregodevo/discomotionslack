@@ -38,11 +38,6 @@ func main() {
 
 	flag.Parse()
 
-	api := slack.New("xoxp-158375954754-260390656065-261049069733-553e910bf231963d14cda02cd8a8cee5")
-	// If you set debugging, it will log all requests to the console
-	// Useful when encountering issues
-	api.SetDebug(true)
-
 	var mutex = &sync.Mutex{}
 
 	conf, err := misc.LoadConf(*configFile)
@@ -50,6 +45,11 @@ func main() {
 		log.WithField("error", err).Error("Failed to load config")
 		os.Exit(-1)
 	}
+
+	api := slack.New(conf.Token)
+	// If you set debugging, it will log all requests to the console
+	// Useful when encountering issues
+	api.SetDebug(true)
 
 	setupLogging(&conf.Log)
 

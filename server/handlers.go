@@ -120,7 +120,7 @@ func (s *Server) Interactive(w http.ResponseWriter, r *http.Request) {
 }
 
 // Responds to slack command /play
-func (s *Server) Play(w http.ResponseWriter, r *http.Request) {
+func (s *Server) DiscoCommand(w http.ResponseWriter, r *http.Request) {
 
 	err := r.ParseForm()
 	if err != nil {

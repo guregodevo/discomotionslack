@@ -28,6 +28,7 @@ type Conf struct {
 	Log             Log
 	CoreURL         string
 	Http            Http
+	Token           string
 }
 
 func LoadConf(filename string) (*Conf, error) {

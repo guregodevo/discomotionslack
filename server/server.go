@@ -6,8 +6,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/guregodevo/discomotionslack/misc"
 	"github.com/gorilla/mux"
+	"github.com/guregodevo/discomotionslack/misc"
 	"github.com/nlopes/slack"
 	log "github.com/sirupsen/logrus"
 )
@@ -67,7 +67,7 @@ func (s *Server) Close() error {
 func (s *Server) NewRouter() *mux.Router {
 	router := mux.NewRouter().StrictSlash(true)
 	s.addRoute(router, "slackPlayInteractive", "POST", "/discomotion/v1/interactive", s.Interactive)
-	s.addRoute(router, "slackPlay", "POST", "/discomotion/v1/play", s.Play)
+	s.addRoute(router, "slackPlay", "POST", "/discomotion/v1/play", s.DiscoCommand)
 	s.addRoute(router, "Index", "GET", "/", s.Index)
 
 	return router
