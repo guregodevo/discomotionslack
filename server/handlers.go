@@ -10,7 +10,7 @@ import (
 
 	"strings"
 
-	"github.com/dailymotion-leo/discomotionslack/models"
+	"github.com/guregodevo/discomotionslack/models"
 	"github.com/nlopes/slack"
 	log "github.com/sirupsen/logrus"
 )

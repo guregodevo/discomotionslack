@@ -4,7 +4,7 @@ Slack App client
 ## Build Instructions
 
 * Install Go 1.8.x
-* Clone this repository into: $GOPATH/src/github.com/dailymotion-leo
+* Clone this repository into: $GOPATH/src/github.com/guregodevo
 * To build, run: **make**
     * You may need to pull in packages: **go get {package path}**
 * To run tests, run: **make tests**

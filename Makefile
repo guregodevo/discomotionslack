@@ -7,7 +7,7 @@ BUILD_TIME=$(shell date -u '+%Y-%m-%d_%H:%M:%S_UTC')
 LDFLAGS=-ldflags "-X main.Version=${VERSION} -X main.Build=${GIT_COMMIT} -X main.BuildTime=${BUILD_TIME}"
 
 GIT_VERSION=$(shell git describe --tags --always --long --dirty --abbrev=7)
-GO_PKG=github.com/dailymotion-leo/discomotionslack
+GO_PKG=github.com/guregodevo/discomotionslack
 
 GOOS=$(shell go env GOOS)
 GOARCH=$(shell go env GOARCH)
