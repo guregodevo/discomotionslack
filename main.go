@@ -40,6 +40,8 @@ func main() {
 
 	var mutex = &sync.Mutex{}
 
+	users := map[string]float32{}
+
 	conf, err := misc.LoadConf(*configFile)
 	if err != nil {
 		log.WithField("error", err).Error("Failed to load config")
@@ -62,7 +64,7 @@ func main() {
 		hostname = host
 	}
 
-	s := startHTTPServer(&conf.Http, termChan, api, mutex, conf.CoreURL, conf.PlayerURL)
+	s := startHTTPServer(&conf.Http, termChan, api, mutex, conf.CoreURL, conf.PlayerURL, users)
 
 	ticker := time.NewTicker(time.Minute)
 	for {
@@ -116,7 +118,7 @@ func setupLogging(conf *misc.Log) {
 	}
 }
 
-func startHTTPServer(conf *misc.Http, termChan chan os.Signal, api *slack.Client, mutex *sync.Mutex, url string, playerURL string) *server.Server {
+func startHTTPServer(conf *misc.Http, termChan chan os.Signal, api *slack.Client, mutex *sync.Mutex, url string, playerURL string, users map[string]float32) *server.Server {
 
 	s := &server.Server{
 		Info: &server.ServerInfo{
@@ -131,6 +133,7 @@ func startHTTPServer(conf *misc.Http, termChan chan os.Signal, api *slack.Client
 		Mutex:     mutex,
 		BaseURL:   url,
 		PlayerURL: playerURL,
+		Users:     users,
 	}
 
 	go func() {

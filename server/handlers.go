@@ -15,6 +15,8 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+const item_price = 0.1
+
 type ServerStatus struct {
 	ServerInfo
 
@@ -37,7 +39,17 @@ func (s *Server) Index(w http.ResponseWriter, r *http.Request) {
 	WriteJson(w, &status, http.StatusOK)
 }
 
-func sendCoreEvent(idx string, now bool, baseUrl string, channelId string) {
+func sendCoreEvent(idx string, now bool, baseUrl string, channelId string, username string, users map[string]float32) {
+
+	if now {
+		i, ok := users[username]
+
+		if !ok {
+			users[username] = item_price
+		} else {
+			users[username] = i + item_price
+		}
+	}
 
 	v := models.PlayVideo{VideoId: idx, Now: now}
 
@@ -109,9 +121,9 @@ func (s *Server) Interactive(w http.ResponseWriter, r *http.Request) {
 
 	if actionname == "queue" {
 		actionname = "queu"
-		go sendCoreEvent(idx, false, s.BaseURL, channelId)
+		go sendCoreEvent(idx, false, s.BaseURL, channelId, username, s.Users)
 	} else if actionname == "play" {
-		go sendCoreEvent(idx, true, s.BaseURL, channelId)
+		go sendCoreEvent(idx, true, s.BaseURL, channelId, username, s.Users)
 	}
 
 	writeText(w, fmt.Sprintf("%s %sed \"%s\"", username, actionname, title), http.StatusOK)
@@ -119,8 +131,8 @@ func (s *Server) Interactive(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-// Responds to slack command /disco-link
-func (s *Server) LinkCommand(w http.ResponseWriter, r *http.Request) {
+// Responds to slack command /disco-url
+func (s *Server) UrlCommand(w http.ResponseWriter, r *http.Request) {
 
 	err := r.ParseForm()
 	if err != nil {
@@ -131,6 +143,33 @@ func (s *Server) LinkCommand(w http.ResponseWriter, r *http.Request) {
 	channelId := r.Form.Get("channel_id")
 
 	writeText(w, fmt.Sprintf("%s/%s", s.PlayerURL, channelId), http.StatusOK)
+}
+
+// Responds to slack command /disco-debit
+func (s *Server) BalanceCommand(w http.ResponseWriter, r *http.Request) {
+
+	err := r.ParseForm()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	balance := float32(0.0)
+
+	values := r.Form
+
+	channelId := values.Get("channel_id")
+	username := strings.TrimSpace(values.Get("text"))
+
+	i, ok := s.Users[username]
+
+	if ok {
+		balance = i
+	}
+
+	log.Debug("channel_id found", channelId)
+	log.Debug("username", username)
+
+	writeText(w, fmt.Sprintf("%s 's balance is %.2f euro", username, balance), http.StatusOK)
 }
 
 // Responds to slack command /disco

@@ -28,6 +28,7 @@ type Server struct {
 	Server    *http.Server
 	Api       *slack.Client
 	Mutex     *sync.Mutex
+	Users     map[string]float32 //TODO ugly hack. should be persisted in DB
 }
 
 func (s *Server) Run(conf *misc.Http) error {
@@ -69,7 +70,8 @@ func (s *Server) NewRouter() *mux.Router {
 	router := mux.NewRouter().StrictSlash(true)
 	s.addRoute(router, "slackPlayInteractive", "POST", "/discomotion/v1/interactive", s.Interactive)
 	s.addRoute(router, "slackPlay", "POST", "/discomotion/v1/play", s.DiscoCommand)
-	s.addRoute(router, "slackPlay", "POST", "/discomotion/v1/link", s.LinkCommand)
+	s.addRoute(router, "slackPlay", "POST", "/discomotion/v1/url", s.UrlCommand)
+	s.addRoute(router, "slackPlay", "POST", "/discomotion/v1/balance", s.BalanceCommand)
 	s.addRoute(router, "Index", "GET", "/", s.Index)
 
 	return router
