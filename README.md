@@ -1,5 +1,5 @@
-# currency-fetcher
-Script that fetches latest currency rates from XE.com and puts them on the Kafka queue.
+# Discomotion Slack integration  
+Slack App client
 
 ## Build Instructions
 
@@ -10,8 +10,7 @@ Script that fetches latest currency rates from XE.com and puts them on the Kafka
 * To run tests, run: **make tests**
 * To create a linux build, run: **make dist**
 * Copy the following files to the service machine:
-    * currency-fetcher (the binary)
-    * bin/start.sh, bin/stop.sh, bin/status.sh (startup scripts)
+    * discomotionslack (the binary)
     * ${ENV}.config.yaml (the config file appropriate to the environment)
 
 ## Running the service
@@ -25,7 +24,7 @@ An alternative is to run the API in an isolated environment, using docker contai
 * Install [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/)
   * `brew cask install docker` on MacOS, and then launch the `Docker` application to start the docker daemon
 * Clone this repository
-  * `git clone https://github.com/dailymotion-leo/currency-fetcher.git`
+  * `git clone https://github.com/guregodevo/discomotionslack.git`
 * Start the application (and all its dependencies)
   * `make run-in-docker`
 * The API is exposed on the port `8080`. And check the available HTTP endpoints.

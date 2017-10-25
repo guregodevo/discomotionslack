@@ -1,4 +1,4 @@
-BINARY=currency-fetcher
+BINARY=discomotionslack
 
 VERSION=1.0.0
 GIT_COMMIT=$(shell git rev-parse HEAD)
